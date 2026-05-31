@@ -3,19 +3,19 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-# =====================================
+# ==================================================
 # PAGE CONFIG
-# =====================================
+# ==================================================
 
 st.set_page_config(
-    page_title="Mobile JKN Analytics Dashboard",
+    page_title="Dashboard Analisis Mobile JKN",
     page_icon="📊",
     layout="wide"
 )
 
-# =====================================
-# CUSTOM CSS
-# =====================================
+# ==================================================
+# CSS
+# ==================================================
 
 st.markdown("""
 <style>
@@ -41,67 +41,89 @@ st.markdown("""
     margin-bottom:20px;
 }
 
-.card{
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0px 4px 12px rgba(0,0,0,0.08);
-}
-
 </style>
 """, unsafe_allow_html=True)
 
-# =====================================
+# ==================================================
 # HEADER
-# =====================================
+# ==================================================
 
 st.markdown("""
 <div class="banner">
 
-<h1>📊 Mobile JKN Analytics Dashboard</h1>
+<h1>📊 Dashboard Analisis Mobile JKN Kabupaten Sumedang</h1>
 
 <h4>
-Analisis Kemudahan Penggunaan, Kualitas Sistem,
-dan Efisiensi Mobile JKN di Kabupaten Sumedang
+Analisis Pengaruh Kemudahan Penggunaan dan Kualitas Sistem
+terhadap Efisiensi Penggunaan Mobile JKN Menggunakan PLS-SEM
 </h4>
 
 <p>
-Metode PLS-SEM | Responden 31 Orang
+31 Responden | Kabupaten Sumedang | Tahun 2026
 </p>
 
 </div>
 """, unsafe_allow_html=True)
 
-# =====================================
-# DESKRIPSI PENELITIAN
-# =====================================
+# ==================================================
+# DESKRIPSI
+# ==================================================
 
 st.info("""
-Penelitian ini bertujuan untuk menganalisis pengaruh
-Kemudahan Penggunaan dan Kualitas Sistem terhadap
-Efisiensi penggunaan Mobile JKN menggunakan metode
-PLS-SEM dengan jumlah responden sebanyak 31 orang.
+Penelitian ini bertujuan menganalisis pengaruh Kemudahan Penggunaan dan
+Kualitas Sistem terhadap Efisiensi penggunaan Mobile JKN menggunakan
+metode Partial Least Square Structural Equation Modeling (PLS-SEM).
+
+Jumlah responden dalam penelitian ini sebanyak 31 orang.
 """)
 
-# =====================================
+# ==================================================
 # KPI
-# =====================================
+# ==================================================
 
 st.subheader("📈 Ringkasan Hasil Penelitian")
 
 c1,c2,c3,c4,c5 = st.columns(5)
 
-c1.metric("👥 Responden","31")
-c2.metric("👍 Kemudahan Penggunaan","4.13")
-c3.metric("⚙️ Kualitas Sistem","3.95")
-c4.metric("⚡ Efisiensi","4.23")
-c5.metric("📊 R²","60.5%")
+with c1:
+    st.metric(
+        "👥 Responden",
+        "31 Orang"
+    )
+
+with c2:
+    st.metric(
+        "👍 Kemudahan Penggunaan",
+        "4.13",
+        "Tinggi"
+    )
+
+with c3:
+    st.metric(
+        "⚙️ Kualitas Sistem",
+        "3.95",
+        "Baik"
+    )
+
+with c4:
+    st.metric(
+        "⚡ Efisiensi",
+        "4.23",
+        "Sangat Tinggi"
+    )
+
+with c5:
+    st.metric(
+        "📊 R²",
+        "60.5%",
+        "Kuat"
+    )
 
 st.markdown("---")
 
-# =====================================
+# ==================================================
 # TEMUAN UTAMA
-# =====================================
+# ==================================================
 
 st.subheader("🎯 Temuan Utama")
 
@@ -115,7 +137,7 @@ with a:
 
 β = 0.66
 
-Memiliki pengaruh terbesar terhadap Efisiensi.
+Variabel yang memiliki pengaruh terbesar terhadap Efisiensi penggunaan Mobile JKN.
 """)
 
 with b:
@@ -126,7 +148,7 @@ with b:
 
 Kategori Tinggi
 
-Mayoritas pengguna merasa Mobile JKN membantu proses layanan kesehatan menjadi lebih efisien.
+Mayoritas responden merasa Mobile JKN membantu proses layanan kesehatan menjadi lebih efisien.
 """)
 
 with c:
@@ -135,14 +157,67 @@ with c:
 
 **R² = 60.5%**
 
-Model mampu menjelaskan 60.5% variasi Efisiensi.
+Model mampu menjelaskan 60.5% variasi Efisiensi penggunaan Mobile JKN.
 """)
 
 st.markdown("---")
 
-# =====================================
-# DATA
-# =====================================
+# ==================================================
+# PROFIL RESPONDEN
+# ==================================================
+
+st.subheader("👥 Profil Responden")
+
+col1,col2 = st.columns(2)
+
+with col1:
+
+    gender = pd.DataFrame({
+        "Jenis Kelamin":[
+            "Perempuan",
+            "Laki-laki"
+        ],
+        "Jumlah":[
+            74.2,
+            25.8
+        ]
+    })
+
+    fig_gender = px.pie(
+        gender,
+        names="Jenis Kelamin",
+        values="Jumlah",
+        title="Komposisi Jenis Kelamin"
+    )
+
+    st.plotly_chart(
+        fig_gender,
+        use_container_width=True
+    )
+
+with col2:
+
+    st.success("""
+### Karakteristik Responden
+
+- Perempuan : 74,2%
+- Laki-laki : 25,8%
+- Usia dominan : 17–25 tahun
+- Profesi dominan : Pelajar/Mahasiswa
+- Lama penggunaan dominan : 6 bulan–1 tahun
+
+### Interpretasi
+
+Mayoritas responden merupakan kelompok usia muda yang relatif familiar dengan teknologi digital. Hal ini menunjukkan bahwa Mobile JKN banyak digunakan oleh pengguna yang aktif memanfaatkan layanan berbasis aplikasi.
+""")
+
+st.markdown("---")
+
+# ==================================================
+# ANALISIS DESKRIPTIF
+# ==================================================
+
+st.subheader("📈 Analisis Deskriptif")
 
 df_variabel = pd.DataFrame({
     "Variabel":[
@@ -150,45 +225,71 @@ df_variabel = pd.DataFrame({
         "Kualitas Sistem",
         "Efisiensi"
     ],
-    "Nilai":[4.13,3.95,4.23]
-})
-
-df_path = pd.DataFrame({
-    "Hubungan":[
-        "KP → EF",
-        "KS → EF"
-    ],
-    "Koefisien":[
-        0.13,
-        0.66
+    "Nilai":[
+        4.13,
+        3.95,
+        4.23
     ]
 })
 
-# =====================================
-# GRAFIK BAR + RADAR
-# =====================================
+fig_desc = px.bar(
+    df_variabel,
+    x="Variabel",
+    y="Nilai",
+    text="Nilai",
+    color="Variabel",
+    title="Rata-rata Variabel Penelitian"
+)
 
-col1,col2 = st.columns(2)
+fig_desc.update_layout(
+    yaxis_range=[0,5],
+    showlegend=False
+)
 
-with col1:
+st.plotly_chart(
+    fig_desc,
+    use_container_width=True
+)
 
-    fig = px.bar(
+st.info("""
+Kemudahan Penggunaan memperoleh nilai rata-rata 4.13,
+Kualitas Sistem sebesar 3.95, dan Efisiensi sebesar 4.23.
+
+Hasil ini menunjukkan bahwa Efisiensi merupakan variabel dengan nilai tertinggi menurut persepsi responden.
+""")
+
+st.markdown("---")
+
+# ==================================================
+# VISUALISASI VARIABEL
+# ==================================================
+
+st.subheader("📊 Visualisasi Variabel Penelitian")
+
+col3,col4 = st.columns(2)
+
+with col3:
+
+    fig_bar = px.bar(
         df_variabel,
         x="Variabel",
         y="Nilai",
         text="Nilai",
         color="Variabel",
-        title="Perbandingan Variabel Penelitian"
+        title="Perbandingan Variabel"
     )
 
-    fig.update_layout(
+    fig_bar.update_layout(
         yaxis_range=[0,5],
         showlegend=False
     )
 
-    st.plotly_chart(fig,use_container_width=True)
+    st.plotly_chart(
+        fig_bar,
+        use_container_width=True
+    )
 
-with col2:
+with col4:
 
     radar = go.Figure()
 
@@ -203,7 +304,7 @@ with col2:
     ))
 
     radar.update_layout(
-        title="Profil Variabel Penelitian",
+        title="Radar Chart Variabel Penelitian",
         polar=dict(
             radialaxis=dict(
                 visible=True,
@@ -213,30 +314,53 @@ with col2:
         showlegend=False
     )
 
-    st.plotly_chart(radar,use_container_width=True)
+    st.plotly_chart(
+        radar,
+        use_container_width=True
+    )
 
-# =====================================
-# SMARTPLS + R²
-# =====================================
+st.markdown("---")
 
-col3,col4 = st.columns(2)
+# ==================================================
+# HASIL SMARTPLS
+# ==================================================
 
-with col3:
+st.subheader("🔬 Hasil SmartPLS")
 
-    fig2 = px.bar(
+df_path = pd.DataFrame({
+    "Hubungan":[
+        "KP → EF",
+        "KS → EF"
+    ],
+    "Koefisien":[
+        0.13,
+        0.66
+    ]
+})
+
+col5,col6 = st.columns(2)
+
+with col5:
+
+    fig_path = px.bar(
         df_path,
         x="Hubungan",
         y="Koefisien",
         text="Koefisien",
         color="Hubungan",
-        title="Path Coefficient SmartPLS"
+        title="Path Coefficient"
     )
 
-    fig2.update_layout(showlegend=False)
+    fig_path.update_layout(
+        showlegend=False
+    )
 
-    st.plotly_chart(fig2,use_container_width=True)
+    st.plotly_chart(
+        fig_path,
+        use_container_width=True
+    )
 
-with col4:
+with col6:
 
     gauge = go.Figure(go.Indicator(
         mode="gauge+number",
@@ -247,45 +371,58 @@ with col4:
         }
     ))
 
-    st.plotly_chart(gauge,use_container_width=True)
-
-st.markdown("---")
-
-# =====================================
-# INSIGHT
-# =====================================
-
-st.subheader("📖 Insight Penelitian")
+    st.plotly_chart(
+        gauge,
+        use_container_width=True
+    )
 
 st.markdown("""
-### Pengaruh Kemudahan Penggunaan terhadap Efisiensi
+### Interpretasi SmartPLS
 
-Kemudahan penggunaan memiliki pengaruh positif terhadap Efisiensi
-dengan koefisien sebesar **0.13**.
+- KP → EF = 0.13
+- KS → EF = 0.66
+- R² = 0.605
 
-### Pengaruh Kualitas Sistem terhadap Efisiensi
-
-Kualitas sistem memiliki pengaruh terbesar terhadap Efisiensi
-dengan koefisien sebesar **0.66**.
-
-### Interpretasi R²
-
-Nilai **R² sebesar 0.605** menunjukkan bahwa Kemudahan Penggunaan
-dan Kualitas Sistem mampu menjelaskan **60.5% variasi Efisiensi**
-penggunaan Mobile JKN.
+Kualitas Sistem memiliki pengaruh yang lebih kuat dibandingkan Kemudahan Penggunaan terhadap Efisiensi penggunaan Mobile JKN.
 """)
 
 st.markdown("---")
 
-# =====================================
+# ==================================================
+# KESIMPULAN DAN IMPLIKASI
+# ==================================================
+
+st.subheader("📌 Kesimpulan dan Implikasi")
+
+st.markdown("""
+### Kesimpulan
+
+1. Kemudahan Penggunaan berpengaruh positif terhadap Efisiensi.
+
+2. Kualitas Sistem berpengaruh positif terhadap Efisiensi.
+
+3. Kualitas Sistem merupakan variabel yang paling dominan.
+
+4. Nilai R² sebesar 0.605 menunjukkan model memiliki kemampuan penjelasan yang cukup kuat.
+
+### Implikasi
+
+Peningkatan kualitas sistem Mobile JKN perlu menjadi prioritas karena memiliki kontribusi terbesar terhadap efisiensi penggunaan aplikasi.
+
+Pengembangan sistem yang lebih stabil, cepat, dan mudah digunakan berpotensi meningkatkan pengalaman pengguna serta efisiensi layanan kesehatan digital.
+""")
+
+st.markdown("---")
+
+# ==================================================
 # FOOTER
-# =====================================
+# ==================================================
 
 st.markdown("""
 <div style='text-align:center;color:gray;'>
 
-Mobile JKN Analytics Dashboard<br>
-Penelitian PLS-SEM | Kabupaten Sumedang | 2026
+Dashboard Analisis Mobile JKN Kabupaten Sumedang<br>
+Penelitian PLS-SEM | 2026
 
 </div>
 """, unsafe_allow_html=True)
